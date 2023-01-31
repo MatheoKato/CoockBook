@@ -1,10 +1,19 @@
 package wsti.marciniuk.mateusz.home
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import wsti.marciniuk.mateusz.models.Ingredient
 import wsti.marciniuk.mateusz.models.Recipe
 
 class HomeFragmentViewModel:ViewModel() {
+
+    private val _recipes = MutableLiveData<List<Recipe>>()
+    val recipes : LiveData<List<Recipe>> = _recipes
+
+    init{
+        _recipes.value = getRecipies()
+    }
 
 
     fun getRecipies(): List<Recipe> {

@@ -20,6 +20,8 @@ class HomeFragment:Fragment() {
 
     private val viewModel: HomeFragmentViewModel by viewModels()
 
+    private var recipesAdapter: RecipesAdapter = RecipesAdapter(mutableListOf())
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,6 +36,7 @@ class HomeFragment:Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initRecycler()
         initClickListener()
+        initObservers()
     }
 
     override fun onDestroy() {
@@ -43,7 +46,7 @@ class HomeFragment:Fragment() {
 
     private fun initRecycler(){
         binding.recipesRecycler.layoutManager = LinearLayoutManager(context)
-        binding.recipesRecycler.adapter = RecipesAdapter(viewModel.getRecipies())
+        binding.recipesRecycler.adapter = recipesAdapter
 
     }
 
@@ -51,6 +54,12 @@ class HomeFragment:Fragment() {
         binding.addButton.setOnClickListener{
             findNavController().navigate(R.id.action_homeFragment_to_addFragment)
         }
+    }
+
+    private fun initObservers(){
+        viewModel.recipes.observe(viewLifecycleOwner, { recipes ->  //this (viewLifecycleOwner)
+            recipesAdapter.setItems(recipes)
+        })
     }
 
 }

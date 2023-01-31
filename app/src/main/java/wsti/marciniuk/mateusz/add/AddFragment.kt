@@ -8,6 +8,7 @@ import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import wsti.marciniuk.mateusz.core.convertToDouble
 import wsti.marciniuk.mateusz.databinding.FragmentAddBinding
 import wsti.marciniuk.mateusz.databinding.ItemIngredientBinding
 import wsti.marciniuk.mateusz.models.Ingredient
@@ -71,7 +72,7 @@ class AddFragment:Fragment() {
             val ingredient = with(ingredientBinding){
                 Ingredient(
                     title = name.text.toString(),
-                    amount = amount.text.toString().replace(",", ".").toDouble(),
+                    amount = amount.text.toString().convertToDouble(),
                     measureType = unit.text.toString()
                 )
             }
