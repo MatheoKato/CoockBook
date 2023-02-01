@@ -11,16 +11,18 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import wsti.marciniuk.mateusz.R
 import wsti.marciniuk.mateusz.databinding.FragmentHomeBinding
+import wsti.marciniuk.mateusz.home.adapter.OnRecipeClickListener
 import wsti.marciniuk.mateusz.home.adapter.RecipesAdapter
+import wsti.marciniuk.mateusz.models.Recipe
 
-class HomeFragment:Fragment() {
+class HomeFragment:Fragment(), OnRecipeClickListener {
 
     private var _binding: FragmentHomeBinding? = null
     val binding get() = _binding!! //zmienna która napewno nie jest nullem
 
     private val viewModel: HomeFragmentViewModel by viewModels()
 
-    private var recipesAdapter: RecipesAdapter = RecipesAdapter(mutableListOf())
+    private var recipesAdapter: RecipesAdapter = RecipesAdapter(mutableListOf(), this)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,8 +41,13 @@ class HomeFragment:Fragment() {
         initObservers()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onResume() {
+        super.onResume()
+        viewModel.getRecipes()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
         _binding = null
     }
 
@@ -48,6 +55,11 @@ class HomeFragment:Fragment() {
         binding.recipesRecycler.layoutManager = LinearLayoutManager(context)
         binding.recipesRecycler.adapter = recipesAdapter
 
+    }
+
+    override fun onItemClick(item: Recipe) {
+        val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(item.id)
+        findNavController().navigate(action)
     }
 
     private fun initClickListener(){
@@ -61,5 +73,7 @@ class HomeFragment:Fragment() {
             recipesAdapter.setItems(recipes)
         })
     }
+
+
 
 }

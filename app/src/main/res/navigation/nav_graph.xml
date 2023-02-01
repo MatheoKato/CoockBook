@@ -12,11 +12,28 @@
         <action
             android:id="@+id/action_homeFragment_to_addFragment"
             app:destination="@id/addFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" >
+            <argument
+                android:name="recipeId"
+                app:argType="long" />
+        </action>
     </fragment>
 
     <fragment
         android:id="@+id/addFragment"
         android:name="wsti.marciniuk.mateusz.add.AddFragment"
         tools:layout="@layout/fragment_add"/>
+
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="wsti.marciniuk.mateusz.details.DetailsFragment"
+        tools:layout="@layout/fragment_details">
+        <argument
+            android:name="recipeId"
+            app:argType="long" />
+
+    </fragment>
 
 </navigation>

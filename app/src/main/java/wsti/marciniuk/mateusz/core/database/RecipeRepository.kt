@@ -2,9 +2,10 @@ package wsti.marciniuk.mateusz.core.database
 
 import wsti.marciniuk.mateusz.models.Recipe
 
-class RecipeRepository (
+class RecipeRepository(
     private val recipeDao: RecipeDao
-        ){
+) {
+
     fun getAll() = recipeDao.getAll()
 
     fun get(id: Long) = recipeDao.get(id)
@@ -16,5 +17,4 @@ class RecipeRepository (
     suspend fun edit(recipe: Recipe) = recipeDao.edit(recipe)
 
     suspend fun delete(id: Long) = recipeDao.delete(id)
-
 }

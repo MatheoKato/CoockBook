@@ -8,7 +8,8 @@ import wsti.marciniuk.mateusz.databinding.ItemRecipeBinding
 import wsti.marciniuk.mateusz.models.Recipe
 
 class RecipesAdapter(
-    private val recipes: MutableList<Recipe>
+    private val recipes: MutableList<Recipe>,
+    private val listener: OnRecipeClickListener
 ): RecyclerView.Adapter<RecipesViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipesViewHolder {
         val binding = ItemRecipeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -16,7 +17,7 @@ class RecipesAdapter(
     }
 
     override fun onBindViewHolder(holder: RecipesViewHolder, position: Int) {
-        holder.bind(recipes[position])
+        holder.bind(recipes[position], listener)
     }
 
     override fun getItemCount() = recipes.size
